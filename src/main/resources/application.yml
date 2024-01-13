@@ -1,0 +1,41 @@
+server:
+  port: 5000
+  servlet:
+    context-path: /ticket-service
+  error:
+    include-message: always
+    include-binding-errors: always
+    include-stacktrace: always
+    include-exception: true
+spring:
+  jmx:
+    enabled: false
+  datasource:
+    url: jdbc:mysql://localhost:3306/ticket_dev?useUnicode=true&characterEncoding=utf8&useSSL=false
+    username: root
+    password: root
+  liquibase:
+    change-log: 'classpath:liquibase/changelog/changelog-master.xml'
+  application:
+    name: ticket-service
+    admin:
+        enabled: false
+  main:
+    allow-bean-definition-overriding: true
+  cloud:
+    config:
+      enabled: false
+  output:
+    ansi:
+      enabled: ALWAYS
+  jpa:
+    open-in-view: true
+    hibernate:
+      id:
+        new_generator_mappings: false
+      ddl-auto: none
+      naming-strategy: org.springframework.boot.orm.jpa.hibernate.SpringNamingStrategy
+    properties:
+      hibernate:
+
+        enable_lazy_load_no_trans: true

@@ -1,0 +1,11 @@
+changeLogFile: classpath:liquibase/changelog/changelog-master.xml
+driver: com.mysql.jdbc.Driver
+url: jdbc:mysql://localhost:3306/ticket_dev
+defaultSchemaName: ticket_dev
+username: root
+password: root
+referenceUrl: hibernate:spring:br.com.ticketservice.domain?dialect=org.hibernate.dialect.MySQL5Dialect
+verbose: true
+dropFirst: false
+logging: debug
+ignoringClasspathPrefix: true
