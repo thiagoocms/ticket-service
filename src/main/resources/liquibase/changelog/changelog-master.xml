@@ -6,6 +6,7 @@
     http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
 
 <!--    <include file="classpath:/liquibase/changelog/changes/20230828-1134_changelog.xml" />-->
-    <includeAll path="classpath:/liquibase/changelog/changes/"/>
+<!--    <includeAll path="classpath:/liquibase/changelog/changes/"/>-->
+    <include file="/liquibase/changelog/changes/20240113-1642_changelog.xml"/>
 
 </databaseChangeLog>
