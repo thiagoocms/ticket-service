@@ -55,7 +55,7 @@ public class UserValidation extends AbstractService {
         }
 
         if (!notInformedFieldsList.isEmpty()) {
-            throw throwsException("Campos obrigatórios não informados: " + String.join(", ", notInformedFieldsList));
+            throw badRequestException("error.mandatory.fields", String.join(", ", notInformedFieldsList));
         }
 
     }
@@ -63,11 +63,11 @@ public class UserValidation extends AbstractService {
     public User checkUpdateConsistence(Long id, User toUpdateEntity) throws Throwable {
 
         if (Objects.isNull(id) || Objects.isNull(toUpdateEntity.getId())) {
-            throw throwsException("400");
+            throw badRequestException("400");
         }
 
         if (id.compareTo(toUpdateEntity.getId()) != 0) {
-            throw throwsException("400");
+            throw badRequestException("400");
         }
         User persistedEntity = checkExistUser(id);
 
@@ -82,9 +82,9 @@ public class UserValidation extends AbstractService {
 
     public User checkExistUser(Long id) throws Throwable {
 
-        User user = userRepository.findFirstById(id);
+        User user = userRepository.findFirstByIdAndDeletedIsFalse(id);
         if (Objects.isNull(user)) {
-            throw throwsException("Usuário não encontrado.");
+            throw resourceNotFoundException("error.user.not.found");
         }
 
         return user;

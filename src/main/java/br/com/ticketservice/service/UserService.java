@@ -62,7 +62,7 @@ public class UserService extends AbstractService {
 
     public Page<UserDTO> findByAll(Pageable pageable) {
 
-        Page<User> page = this.userRepository.findAll(pageable);
+        Page<User> page = this.userRepository.findAllByDeletedIsFalse(pageable);
         return modelMapper.map(page, new TypeToken<Page<UserDTO>>() {
         }.getType());
 
