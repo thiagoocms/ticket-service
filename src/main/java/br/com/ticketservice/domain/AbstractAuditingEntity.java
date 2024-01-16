@@ -18,7 +18,7 @@ import java.time.LocalDateTime;
 @EntityListeners(AuditingEntityListener.class)
 @Getter
 @Setter
-public class AbstractAuditingEntity {
+abstract public class AbstractAuditingEntity {
 
 	@CreatedBy
 	@Column(name = "created_by", nullable = false, length = 50, updatable = false)
