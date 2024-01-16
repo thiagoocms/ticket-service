@@ -10,5 +10,6 @@
     <include file="/liquibase/changelog/changes/20240113-1642_changelog.xml"/>
     <include file="liquibase/changelog/changes/20240115-2119_changelog.xml"/>
     <include file="liquibase/changelog/changes/20240115-2319_changelog.xml"/>
+    <include file="liquibase/changelog/changes/20240116-1718_changelog.xml"/>
 
 </databaseChangeLog>

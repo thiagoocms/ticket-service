@@ -12,6 +12,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "tb_tickets")
@@ -48,8 +49,8 @@ public class Ticket extends AbstractAuditingEntity implements Serializable {
     private TicketStatusEnum status;
 
     @Column(name = "waiting_date")
-    private DateTime waitingDate;
+    private LocalDateTime waitingDate;
 
     @Column(name = "finished_date")
-    private DateTime finishedDate;
+    private LocalDateTime finishedDate;
 }

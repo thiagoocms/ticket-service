@@ -31,6 +31,6 @@ public class Category extends AbstractAuditingEntity implements Serializable {
     private CategoryPriorityEnum priority;
 
     @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @JoinColumn(name = "employee_id", nullable = false)
+    private User employee;
 }

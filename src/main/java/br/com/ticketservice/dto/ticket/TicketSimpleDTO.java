@@ -24,7 +24,7 @@ public class TicketSimpleDTO implements Serializable {
 
     private Long userId;
 
-    private CategorySimpleDTO category;
+    private Long categoryId;
 
     private UserDTO employee;
 

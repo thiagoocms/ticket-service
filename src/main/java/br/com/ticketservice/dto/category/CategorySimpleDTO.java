@@ -18,5 +18,5 @@ public class CategorySimpleDTO implements Serializable {
     private Long id;
     private String name;
     private CategoryPriorityEnum priority;
-    private Long userId;
+    private Long employeeId;
 }

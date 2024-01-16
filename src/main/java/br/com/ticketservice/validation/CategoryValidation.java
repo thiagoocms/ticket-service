@@ -43,7 +43,7 @@ public class CategoryValidation extends AbstractService {
         if (Objects.isNull(entity.getPriority())) {
             notInformedFieldsList.add(messageService.getMessage("category.priority"));
         }
-        if (Objects.isNull(entity.getUser()) || Objects.isNull(entity.getUser().getId())) {
+        if (Objects.isNull(entity.getEmployee()) || Objects.isNull(entity.getEmployee().getId())) {
             notInformedFieldsList.add(messageService.getMessage("category.user"));
         }
 
@@ -75,7 +75,7 @@ public class CategoryValidation extends AbstractService {
 
     public Category checkRelations(Category toPersistEntity) throws Throwable {
 
-        this.checkUser(toPersistEntity);
+        this.checkEmployee(toPersistEntity);
         return toPersistEntity;
     }
 
@@ -89,18 +89,18 @@ public class CategoryValidation extends AbstractService {
         return category;
     }
 
-    private Category checkUser(Category entity) throws Throwable {
+    private Category checkEmployee(Category entity) throws Throwable {
 
-        if (Objects.isNull(entity.getUser())) {
+        if (Objects.isNull(entity.getEmployee())) {
             return entity;
         }
 
-        if (Objects.isNull(entity.getUser().getId())) {
-            entity.setUser(null);
+        if (Objects.isNull(entity.getEmployee().getId())) {
+            entity.setEmployee(null);
             return entity;
         }
 
-        User user = this.userRepository.findFirstByIdAndDeletedIsFalse(entity.getUser().getId());
+        User user = this.userRepository.findFirstByIdAndDeletedIsFalse(entity.getEmployee().getId());
 
         if (user == null) {
             throw resourceNotFoundException("error.user.not.found");
@@ -111,7 +111,7 @@ public class CategoryValidation extends AbstractService {
             throw badRequestException("error.user.not.permission");
         }
 
-        entity.setUser(user);
+        entity.setEmployee(user);
 
         return entity;
     }
