@@ -36,22 +36,22 @@ public class UserValidation extends AbstractService {
         List<String> notInformedFieldsList = new ArrayList<>();
 
         if (Objects.isNull(entity.getName()) || entity.getName().isEmpty()) {
-            notInformedFieldsList.add("Nome");
+            notInformedFieldsList.add(messageService.getMessage("user.name"));
         }
         if (Objects.isNull(entity.getDocumentNumber()) || entity.getDocumentNumber().isEmpty()) {
-            notInformedFieldsList.add("N° do documento");
+            notInformedFieldsList.add(messageService.getMessage("user.documentNumber"));
         }
         if (Objects.isNull(entity.getDocumentType())) {
-            notInformedFieldsList.add("Tipo do documento");
+            notInformedFieldsList.add(messageService.getMessage("user.documentType"));
         }
         if (Objects.isNull(entity.getPassword()) || entity.getPassword().isEmpty()) {
-            notInformedFieldsList.add("Senha");
+            notInformedFieldsList.add(messageService.getMessage("user.password"));
         }
         if (Objects.isNull(entity.getLogin()) || entity.getLogin().isEmpty()) {
-            notInformedFieldsList.add("Login");
+            notInformedFieldsList.add(messageService.getMessage("user.login"));
         }
         if (Objects.isNull(entity.getProfile())) {
-            notInformedFieldsList.add("Profile");
+            notInformedFieldsList.add(messageService.getMessage("user.profile"));
         }
 
         if (!notInformedFieldsList.isEmpty()) {

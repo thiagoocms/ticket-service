@@ -8,8 +8,11 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 @Entity
 @Table(name = "tb_users")
@@ -17,7 +20,7 @@ import java.io.Serializable;
 @NoArgsConstructor
 @Getter
 @Setter
-public class User extends AbstractAuditingEntity implements Serializable {
+public class User extends AbstractAuditingEntity implements UserDetails, Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,10 +39,40 @@ public class User extends AbstractAuditingEntity implements Serializable {
     @Column(name = "login", length = 255, nullable = false)
     private String login;
 
-    @Column(name = "password", length = 20, nullable = false)
+    @Column(name = "password", length = 255, nullable = false)
     private String password;
 
     @Enumerated(EnumType.ORDINAL)
     @Column(name = "profile", nullable = false)
     private UserProfileEnum profile;
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return null;
+    }
+
+    @Override
+    public String getUsername() {
+        return login;
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
+    }
 }
