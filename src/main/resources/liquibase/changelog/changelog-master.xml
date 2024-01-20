@@ -11,5 +11,6 @@
     <include file="liquibase/changelog/changes/20240115-2119_changelog.xml"/>
     <include file="liquibase/changelog/changes/20240115-2319_changelog.xml"/>
     <include file="liquibase/changelog/changes/20240116-1718_changelog.xml"/>
+    <include file="liquibase/changelog/changes/20240120-1550_changelog.xml"/>
 
 </databaseChangeLog>

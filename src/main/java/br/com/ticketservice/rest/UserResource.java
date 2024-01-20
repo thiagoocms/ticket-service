@@ -1,7 +1,9 @@
 package br.com.ticketservice.rest;
 
 import br.com.ticketservice.constants.AppConstants;
+import br.com.ticketservice.dto.user.UserAuthenticatedDTO;
 import br.com.ticketservice.dto.user.UserDTO;
+import br.com.ticketservice.dto.user.UserLoginDTO;
 import br.com.ticketservice.service.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -76,5 +78,15 @@ public class UserResource {
         userService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @PostMapping("/login")
+    public ResponseEntity<UserAuthenticatedDTO> login(@RequestBody UserLoginDTO dto) throws Throwable {
+
+        UserAuthenticatedDTO tokenDTO = userService.login(dto);
+
+        return ResponseEntity
+                .ok()
+                .body(tokenDTO);
     }
 }
