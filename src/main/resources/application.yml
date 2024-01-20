@@ -39,3 +39,7 @@ spring:
       hibernate:
 
         enable_lazy_load_no_trans: true
+jwt:
+  key:
+    private: classpath:app.key
+    public: classpath:app.pub
