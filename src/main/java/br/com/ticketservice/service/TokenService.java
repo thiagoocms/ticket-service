@@ -1,16 +1,17 @@
 package br.com.ticketservice.service;
 
 import br.com.ticketservice.domain.user.User;
+import br.com.ticketservice.exception.BadRequestException;
+import br.com.ticketservice.exception.UnauthorizedException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.security.oauth2.jwt.JwtClaimsSet;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.JwtEncoder;
-import org.springframework.security.oauth2.jwt.JwtEncoderParameters;
+import org.springframework.security.oauth2.jwt.*;
 import org.springframework.stereotype.Service;
 
+import java.time.Instant;
 import java.time.LocalDateTime;
 import java.time.ZoneOffset;
+import java.util.Objects;
 
 @Service
 @RequiredArgsConstructor
@@ -35,8 +36,11 @@ public class TokenService {
                 .getTokenValue();
     }
 
-    public String validateToken(String token) {
-        return  decoder.decode(token).getTokenValue();
+    public void validateToken(String token) {
+        Jwt jwt = decoder.decode(token);
+        if (Objects.requireNonNull(jwt.getExpiresAt()).isBefore(Instant.now())) {
+            throw new UnauthorizedException();
+        }
     }
 
 }
