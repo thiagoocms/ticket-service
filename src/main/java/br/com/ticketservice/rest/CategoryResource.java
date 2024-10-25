@@ -1,6 +1,7 @@
 package br.com.ticketservice.rest;
 
 import br.com.ticketservice.constants.AppConstants;
+import br.com.ticketservice.dto.Response;
 import br.com.ticketservice.dto.category.CategorySimpleDTO;
 import br.com.ticketservice.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -21,53 +22,53 @@ public class CategoryResource {
     private final CategoryService categoryService;
 
     @PostMapping("/by-list")
-    public ResponseEntity<List<CategorySimpleDTO>> createOrUpdateByList(@RequestBody List<CategorySimpleDTO> dtoList) throws Throwable {
+    public ResponseEntity<Response<List<CategorySimpleDTO>>> createOrUpdateByList(@RequestBody List<CategorySimpleDTO> dtoList) throws Throwable {
 
         List<CategorySimpleDTO> list = categoryService.createOrUpdateByList(dtoList);
 
         return ResponseEntity
                 .ok()
-                .body(list);
+                .body(new Response<>(HttpStatus.OK, list));
     }
 
     @PostMapping
-    public ResponseEntity<CategorySimpleDTO> create(@RequestBody CategorySimpleDTO dto) throws Throwable {
+    public ResponseEntity<Response<CategorySimpleDTO>> create(@RequestBody CategorySimpleDTO dto) throws Throwable {
 
         dto = categoryService.create(dto);
 
         return ResponseEntity
                 .created(URI.create("/categories"))
-                .body(dto);
+                .body(new Response<>(HttpStatus.CREATED, dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<CategorySimpleDTO> update(@PathVariable Long id, @RequestBody CategorySimpleDTO dto) throws Throwable {
+    public ResponseEntity<Response<CategorySimpleDTO>> update(@PathVariable Long id, @RequestBody CategorySimpleDTO dto) throws Throwable {
 
         dto = categoryService.update(id, dto);
 
         return ResponseEntity
                 .ok()
-                .body(dto);
+                .body(new Response<>(HttpStatus.OK, dto));
     }
 
     @GetMapping
-    public ResponseEntity<Page<CategorySimpleDTO>> findByAll(Pageable pageable) {
+    public ResponseEntity<Response<List<CategorySimpleDTO>>> findByAll(Pageable pageable) {
 
         Page<CategorySimpleDTO> page = categoryService.findByAll(pageable);
 
         return ResponseEntity
                 .ok()
-                .body(page);
+                .body(new Response<>(HttpStatus.OK, page));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<CategorySimpleDTO> findById(@PathVariable Long id) throws Throwable {
+    public ResponseEntity<Response<CategorySimpleDTO>> findById(@PathVariable Long id) throws Throwable {
 
-        CategorySimpleDTO userDTO = categoryService.findById(id);
+        CategorySimpleDTO dto = categoryService.findById(id);
 
         return ResponseEntity
                 .ok()
-                .body(userDTO);
+                .body(new Response<>(HttpStatus.OK, dto));
     }
 
     @DeleteMapping("/{id}")

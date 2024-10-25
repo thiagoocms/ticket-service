@@ -106,7 +106,7 @@ public class CategoryValidation extends AbstractService {
             throw resourceNotFoundException("error.user.not.found");
         }
 
-        var profilesPermission = List.of(UserProfileEnum.EMPLOYEE, UserProfileEnum.ADMIM);
+        var profilesPermission = List.of(UserProfileEnum.EMPLOYEE, UserProfileEnum.ADMIN);
         if (!profilesPermission.contains(user.getProfile())) {
             throw badRequestException("error.user.not.permission");
         }

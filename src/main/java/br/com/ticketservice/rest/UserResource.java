@@ -1,6 +1,7 @@
 package br.com.ticketservice.rest;
 
 import br.com.ticketservice.constants.AppConstants;
+import br.com.ticketservice.dto.Response;
 import br.com.ticketservice.dto.user.UserAuthenticatedDTO;
 import br.com.ticketservice.dto.user.UserDTO;
 import br.com.ticketservice.dto.user.UserLoginDTO;
@@ -23,53 +24,53 @@ public class UserResource {
     private final UserService userService;
 
     @PostMapping("/by-list")
-    public ResponseEntity<List<UserDTO>> createOrUpdateByList(@RequestBody List<UserDTO> dtoList) throws Throwable {
+    public ResponseEntity<Response<List<UserDTO>>> createOrUpdateByList(@RequestBody List<UserDTO> dtoList) throws Throwable {
 
         List<UserDTO> list = userService.createOrUpdateByList(dtoList);
 
         return ResponseEntity
                 .ok()
-                .body(list);
+                .body(new Response<>(HttpStatus.OK, list));
     }
 
     @PostMapping
-    public ResponseEntity<UserDTO> create(@RequestBody UserDTO dto) throws Throwable {
+    public  ResponseEntity<Response<UserDTO>> create(@RequestBody UserDTO dto) throws Throwable {
 
         dto = userService.create(dto);
 
         return ResponseEntity
                 .created(URI.create("/users"))
-                .body(dto);
+                .body(new Response<>(HttpStatus.CREATED, dto));
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<UserDTO> update(@PathVariable Long id, @RequestBody UserDTO dto) throws Throwable {
+    public ResponseEntity<Response<UserDTO>> update(@PathVariable Long id, @RequestBody UserDTO dto) throws Throwable {
 
         dto = userService.update(id, dto);
 
         return ResponseEntity
                 .ok()
-                .body(dto);
+                .body(new Response<>(HttpStatus.OK, dto));
     }
 
     @GetMapping
-    public ResponseEntity<Page<UserDTO>> findByAll(Pageable pageable) {
+    public ResponseEntity<Response<List<UserDTO>>> findByAll(Pageable pageable) {
 
         Page<UserDTO> page = userService.findByAll(pageable);
 
         return ResponseEntity
                 .ok()
-                .body(page);
+                .body(new Response<>(HttpStatus.OK, page));
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<UserDTO> findById(@PathVariable Long id) throws Throwable {
+    public ResponseEntity<Response<UserDTO>> findById(@PathVariable Long id) throws Throwable {
 
         UserDTO userDTO = userService.findById(id);
 
         return ResponseEntity
                 .ok()
-                .body(userDTO);
+                .body(new Response<>(HttpStatus.OK, userDTO));
     }
 
     @DeleteMapping("/{id}")
