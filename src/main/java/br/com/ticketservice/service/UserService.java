@@ -23,6 +23,4 @@ public interface UserService extends UserDetailsService {
     Page<UserDTO> findByAll(Pageable pageable);
 
     void delete(Long id) throws Throwable;
-
-    UserAuthenticatedDTO login(UserLoginDTO userLoginDTO) throws Throwable;
 }

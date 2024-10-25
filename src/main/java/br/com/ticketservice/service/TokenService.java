@@ -21,7 +21,7 @@ public class TokenService {
     private final JwtDecoder decoder;
 
     public String generateToken(User user) {
-        LocalDateTime now = LocalDateTime.now().plusHours(2);
+        LocalDateTime now = LocalDateTime.now();
         long expiry = 2l;
 
         JwtClaimsSet claims = JwtClaimsSet.builder()
@@ -37,9 +37,14 @@ public class TokenService {
     }
 
     public void validateToken(String token) {
-        Jwt jwt = decoder.decode(token);
+        Jwt jwt;
+        try {
+            jwt = decoder.decode(token);
+        } catch (BadJwtException e) {
+            throw new UnauthorizedException("invalid token");
+        }
         if (Objects.requireNonNull(jwt.getExpiresAt()).isBefore(Instant.now())) {
-            throw new UnauthorizedException();
+            throw new UnauthorizedException("expired date");
         }
     }
 

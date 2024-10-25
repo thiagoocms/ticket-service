@@ -79,14 +79,4 @@ public class UserResource {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
-
-    @PostMapping("/login")
-    public ResponseEntity<UserAuthenticatedDTO> login(@RequestBody UserLoginDTO dto) throws Throwable {
-
-        UserAuthenticatedDTO tokenDTO = userService.login(dto);
-
-        return ResponseEntity
-                .ok()
-                .body(tokenDTO);
-    }
 }

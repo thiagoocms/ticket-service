@@ -1,9 +1,7 @@
 package br.com.ticketservice.service.impl;
 
 import br.com.ticketservice.domain.user.User;
-import br.com.ticketservice.dto.user.UserAuthenticatedDTO;
 import br.com.ticketservice.dto.user.UserDTO;
-import br.com.ticketservice.dto.user.UserLoginDTO;
 import br.com.ticketservice.repository.UserRepository;
 import br.com.ticketservice.service.AbstractService;
 import br.com.ticketservice.service.TokenService;
@@ -14,13 +12,11 @@ import lombok.SneakyThrows;
 import org.modelmapper.TypeToken;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -31,7 +27,6 @@ public class UserServiceImpl extends AbstractService implements UserService {
 
     private final UserRepository userRepository;
     private final UserValidation userValidation;
-    private final TokenService tokenService;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -101,24 +96,11 @@ public class UserServiceImpl extends AbstractService implements UserService {
     public User loadUserByUsername(String username) throws UsernameNotFoundException {
 
         User user = userRepository.findByLoginAndDeletedIsFalse(username);
-       if (user == null) {
-           throw resourceNotFoundException("error.user.not.found");
-       }
+        if (user == null) {
+            throw resourceNotFoundException("error.user.not.found");
+        }
 
         return user;
-    }
-
-    @Override
-    public UserAuthenticatedDTO login(UserLoginDTO userLoginDTO) throws Throwable {
-        if (userLoginDTO.getLogin().isEmpty() || userLoginDTO.getPassword().isEmpty()) {
-            throw badRequestException("error.user.login.required");
-        }
-        User user = loadUserByUsername(userLoginDTO.getLogin());
-        if (!passwordEncoder.matches(userLoginDTO.getPassword(), user.getPassword())) {
-            throw badRequestException("error.user.login.password.invalid");
-        }
-        String token = tokenService.generateToken(user);
-        return new UserAuthenticatedDTO(token);
     }
 
 }

@@ -4,6 +4,8 @@ import br.com.ticketservice.dto.ErrorDetailsDTO;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.authentication.BadCredentialsException;
+import org.springframework.security.authentication.InternalAuthenticationServiceException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 import org.springframework.web.context.request.WebRequest;
@@ -37,6 +39,21 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
         ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(getTime(), HttpStatus.UNAUTHORIZED.value(), exception.getMessage(),
                 webRequest.getDescription(false));
         return new ResponseEntity<>(errorDetails, new HttpHeaders(), HttpStatus.UNAUTHORIZED);
+    }
+
+    @ExceptionHandler({InternalAuthenticationServiceException.class, BadCredentialsException.class})
+    public ResponseEntity<ErrorDetailsDTO> handleForbiddenExceptionException(Exception exception,
+                                                                             WebRequest webRequest) {
+        ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(getTime(), HttpStatus.FORBIDDEN.value(), exception.getMessage(),
+                webRequest.getDescription(false));
+        return new ResponseEntity<>(errorDetails, new HttpHeaders(), HttpStatus.FORBIDDEN);
+    }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ErrorDetailsDTO> handleExceptionException(Exception exception, WebRequest webRequest) {
+        ErrorDetailsDTO errorDetails = new ErrorDetailsDTO(getTime(), HttpStatus.INTERNAL_SERVER_ERROR.value(), exception.getMessage(),
+                webRequest.getDescription(false));
+        return new ResponseEntity<>(errorDetails, new HttpHeaders(), HttpStatus.INTERNAL_SERVER_ERROR);
     }
 
     private Long getTime() {
