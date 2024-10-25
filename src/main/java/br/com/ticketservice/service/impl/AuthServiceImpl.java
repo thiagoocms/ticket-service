@@ -9,7 +9,10 @@ import br.com.ticketservice.service.TokenService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Service;
+
+import java.util.Base64;
 
 @Service
 @RequiredArgsConstructor
@@ -20,11 +23,17 @@ public class AuthServiceImpl extends AbstractService implements AuthService {
 
     @Override
     public UserAuthenticatedDTO auth(UserLoginDTO userLoginDTO) throws Throwable {
-        if ((userLoginDTO.getLogin() == null || userLoginDTO.getLogin().isEmpty()) || (userLoginDTO.getPassword() == null || userLoginDTO.getPassword().isEmpty())) {
+        String[] decrypt = new String(Base64.getDecoder().decode(userLoginDTO.getAuth())).split(":");
+        if (decrypt.length < 2) {
+            throw badRequestException("");
+        }
+        var login = decrypt[0];
+        var password = decrypt[1];
+        if ((login == null || login.isEmpty()) || (password == null || password.isEmpty())) {
             throw badRequestException("error.user.login.required");
         }
-        var auth = new UsernamePasswordAuthenticationToken(userLoginDTO.getLogin(), userLoginDTO.getPassword());
-        var authentication = manager.authenticate(auth);
+        var auth = new UsernamePasswordAuthenticationToken(decrypt[0], decrypt[1]);
+        Authentication authentication = manager.authenticate(auth);
         String token = tokenService.generateToken((User) authentication.getPrincipal());
         return new UserAuthenticatedDTO(token);
     }
