@@ -3,6 +3,7 @@ package br.com.ticketservice.service.impl;
 import br.com.ticketservice.domain.ticket.Ticket;
 import br.com.ticketservice.dto.ticket.TicketDTO;
 import br.com.ticketservice.dto.ticket.TicketSimpleDTO;
+import br.com.ticketservice.enumerated.TicketStatusEnum;
 import br.com.ticketservice.repository.TicketRepository;
 import br.com.ticketservice.service.AbstractService;
 import br.com.ticketservice.service.TicketService;
@@ -83,5 +84,10 @@ public class TicketServiceImpl extends AbstractService implements TicketService 
         entity.setDeleted(Boolean.TRUE);
         ticketRepository.save(entity);
 
+    }
+
+    @Override
+    public List<TicketStatusEnum> findStatus() {
+        return List.of(TicketStatusEnum.values());
     }
 }

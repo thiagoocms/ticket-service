@@ -3,6 +3,7 @@ package br.com.ticketservice.rest;
 import br.com.ticketservice.constants.AppConstants;
 import br.com.ticketservice.dto.Response;
 import br.com.ticketservice.dto.category.CategorySimpleDTO;
+import br.com.ticketservice.enumerated.CategoryPriorityEnum;
 import br.com.ticketservice.service.CategoryService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -77,5 +78,15 @@ public class CategoryResource {
         categoryService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/priority")
+    public ResponseEntity<Response<List<CategoryPriorityEnum>>> findPriority() {
+
+        List<CategoryPriorityEnum> list = categoryService.findPriority();
+
+        return ResponseEntity
+                .ok()
+                .body(new Response<>(HttpStatus.OK, list));
     }
 }

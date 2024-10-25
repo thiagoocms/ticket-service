@@ -2,6 +2,7 @@ package br.com.ticketservice.service;
 
 import br.com.ticketservice.dto.ticket.TicketDTO;
 import br.com.ticketservice.dto.ticket.TicketSimpleDTO;
+import br.com.ticketservice.enumerated.TicketStatusEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -20,4 +21,6 @@ public interface TicketService {
     Page<TicketSimpleDTO> findByAll(Pageable pageable);
 
     void delete(Long id) throws Throwable;
+
+    List<TicketStatusEnum> findStatus();
 }

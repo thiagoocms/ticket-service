@@ -2,6 +2,7 @@ package br.com.ticketservice.service.impl;
 
 import br.com.ticketservice.domain.category.Category;
 import br.com.ticketservice.dto.category.CategorySimpleDTO;
+import br.com.ticketservice.enumerated.CategoryPriorityEnum;
 import br.com.ticketservice.repository.CategoryRepository;
 import br.com.ticketservice.service.AbstractService;
 
@@ -85,5 +86,10 @@ public class CategoryServiceImpl extends AbstractService implements CategoryServ
         entity.setDeleted(Boolean.TRUE);
         categoryRepository.save(entity);
 
+    }
+
+    @Override
+    public List<CategoryPriorityEnum> findPriority() {
+        return List.of(CategoryPriorityEnum.values());
     }
 }

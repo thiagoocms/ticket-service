@@ -35,7 +35,7 @@ public class TicketValidation extends AbstractService {
     public void checkOwnerFieldsToCreate(Ticket entity) {
 
         entity.setId(null);
-        entity.setStatus(TicketStatusEnum.NOT_STARTED);
+        entity.setStatus(TicketStatusEnum.NEW);
     }
 
     public void checkMandatoryFields(Ticket entity) throws Throwable {

@@ -4,6 +4,7 @@ import br.com.ticketservice.constants.AppConstants;
 import br.com.ticketservice.dto.Response;
 import br.com.ticketservice.dto.ticket.TicketDTO;
 import br.com.ticketservice.dto.ticket.TicketSimpleDTO;
+import br.com.ticketservice.enumerated.TicketStatusEnum;
 import br.com.ticketservice.service.TicketService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -38,7 +39,7 @@ public class TicketResource {
         dto = ticketService.create(dto);
 
         return ResponseEntity
-                .created(URI.create("/categories"))
+                .created(URI.create("/tickets"))
                 .body(new Response<>(HttpStatus.CREATED, dto));
     }
 
@@ -78,5 +79,15 @@ public class TicketResource {
         ticketService.delete(id);
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
+    }
+
+    @GetMapping("/status")
+    public ResponseEntity<Response<List<TicketStatusEnum>>> findStatus() {
+
+        List<TicketStatusEnum> list = ticketService.findStatus();
+
+        return ResponseEntity
+                .ok()
+                .body(new Response<>(HttpStatus.OK, list));
     }
 }

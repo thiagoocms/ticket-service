@@ -1,6 +1,7 @@
 package br.com.ticketservice.service;
 
 import br.com.ticketservice.dto.category.CategorySimpleDTO;
+import br.com.ticketservice.enumerated.CategoryPriorityEnum;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
@@ -19,4 +20,6 @@ public interface CategoryService {
     Page<CategorySimpleDTO> findByAll(Pageable pageable);
 
     void delete(Long id) throws Throwable;
+
+    List<CategoryPriorityEnum> findPriority();
 }
