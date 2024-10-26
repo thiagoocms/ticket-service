@@ -53,6 +53,7 @@ public class SecurityConfig {
                         auth -> auth
                                 .requestMatchers(HttpMethod.POST, AppConstants.PATH + AppConstants.API + AppConstants.V1 + "/auth").permitAll()
                                 .requestMatchers(HttpMethod.POST, AppConstants.PATH + AppConstants.API + AppConstants.V1 + "/users").permitAll()
+                                .requestMatchers("/v3/api-docs/**", "/swagger-ui.html", "/swagger-ui/**").permitAll()
                                 .anyRequest().authenticated()
                 )
                 .httpBasic(Customizer.withDefaults())

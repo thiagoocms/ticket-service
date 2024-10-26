@@ -3,6 +3,7 @@ package br.com.ticketservice.service.impl;
 import br.com.ticketservice.domain.user.User;
 import br.com.ticketservice.dto.user.UserAuthenticatedDTO;
 import br.com.ticketservice.dto.user.UserLoginDTO;
+import br.com.ticketservice.exception.BadRequestException;
 import br.com.ticketservice.service.AbstractService;
 import br.com.ticketservice.service.AuthService;
 import br.com.ticketservice.service.TokenService;
@@ -25,7 +26,7 @@ public class AuthServiceImpl extends AbstractService implements AuthService {
     public UserAuthenticatedDTO auth(UserLoginDTO userLoginDTO) throws Throwable {
         String[] decrypt = new String(Base64.getDecoder().decode(userLoginDTO.getAuth())).split(":");
         if (decrypt.length < 2) {
-            throw badRequestException("");
+            throw new BadRequestException();
         }
         var login = decrypt[0];
         var password = decrypt[1];

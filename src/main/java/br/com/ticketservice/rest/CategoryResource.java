@@ -5,6 +5,7 @@ import br.com.ticketservice.dto.Response;
 import br.com.ticketservice.dto.category.CategorySimpleDTO;
 import br.com.ticketservice.enumerated.CategoryPriorityEnum;
 import br.com.ticketservice.service.CategoryService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -18,6 +19,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = AppConstants.PATH + AppConstants.API + AppConstants.V1 + "/categories")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "token")
 public class CategoryResource {
 
     private final CategoryService categoryService;

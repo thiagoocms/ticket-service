@@ -6,6 +6,7 @@ import br.com.ticketservice.dto.ticket.TicketDTO;
 import br.com.ticketservice.dto.ticket.TicketSimpleDTO;
 import br.com.ticketservice.enumerated.TicketStatusEnum;
 import br.com.ticketservice.service.TicketService;
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,6 +20,7 @@ import java.util.List;
 @RestController
 @RequestMapping(value = AppConstants.PATH + AppConstants.API + AppConstants.V1 + "/tickets")
 @RequiredArgsConstructor
+@SecurityRequirement(name = "token")
 public class TicketResource {
 
     private final TicketService ticketService;
