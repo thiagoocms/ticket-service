@@ -33,4 +33,6 @@ public class TicketSimpleDTO implements Serializable {
     private Long waitingDate;
 
     private Long finishedDate;
+
+    private Long createdDate;
 }

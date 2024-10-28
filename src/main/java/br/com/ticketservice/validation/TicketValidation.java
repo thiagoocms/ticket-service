@@ -12,6 +12,7 @@ import br.com.ticketservice.service.AbstractService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -159,7 +160,7 @@ public class TicketValidation extends AbstractService {
             return entity;
         }
 
-        Category category = this.categoryRepository.findFirstByIdAndDeletedIsFalse(entity.getUser().getId());
+        Category category = this.categoryRepository.findFirstByIdAndDeletedIsFalse(entity.getCategory().getId());
 
         if (category == null) {
             throw resourceNotFoundException("error.category.not.found");
@@ -169,7 +170,7 @@ public class TicketValidation extends AbstractService {
             case NORMAL -> 3;
             default -> 2;
         };
-        entity.setWaitingDate(entity.getCreatedDate().plusDays(day));
+        entity.setWaitingDate(LocalDateTime.now().plusDays(day));
         entity.setCategory(category);
 
         return entity;

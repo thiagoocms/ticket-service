@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 @AllArgsConstructor
 @NoArgsConstructor
@@ -33,4 +34,6 @@ public class TicketDTO implements Serializable {
     private Long waitingDate;
 
     private Long finishedDate;
+
+    private Long createdDate;
 }
