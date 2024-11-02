@@ -1,13 +1,10 @@
 package br.com.ticketservice.service;
 
-import br.com.ticketservice.dto.user.UserAuthenticatedDTO;
 import br.com.ticketservice.dto.user.UserDTO;
-import br.com.ticketservice.dto.user.UserLoginDTO;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.core.userdetails.UserDetailsService;
 
-import java.io.IOException;
 import java.util.List;
 
 public interface UserService extends UserDetailsService {
@@ -23,4 +20,6 @@ public interface UserService extends UserDetailsService {
     Page<UserDTO> findByAll(Pageable pageable);
 
     void delete(Long id) throws Throwable;
+
+    UserDTO findByLogin(String username) throws Throwable;
 }

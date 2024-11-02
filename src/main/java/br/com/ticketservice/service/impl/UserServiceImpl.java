@@ -103,4 +103,15 @@ public class UserServiceImpl extends AbstractService implements UserService {
         return user;
     }
 
+    @Override
+    public UserDTO findByLogin(String username) throws Throwable {
+
+        User user = userRepository.findByLoginAndDeletedIsFalse(username);
+        if (user == null) {
+            throw resourceNotFoundException("error.user.not.found");
+        }
+
+        return modelMapper.map(user, UserDTO.class);
+    }
+
 }

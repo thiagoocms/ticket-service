@@ -2,11 +2,15 @@ package br.com.ticketservice.service.impl;
 
 import br.com.ticketservice.domain.ticket.Ticket;
 import br.com.ticketservice.dto.ticket.TicketDTO;
+import br.com.ticketservice.dto.ticket.TicketFilterDTO;
 import br.com.ticketservice.dto.ticket.TicketSimpleDTO;
 import br.com.ticketservice.enumerated.TicketStatusEnum;
 import br.com.ticketservice.repository.TicketRepository;
+import br.com.ticketservice.search.SearchCriteria;
+import br.com.ticketservice.search.TicketSpecification;
 import br.com.ticketservice.service.AbstractService;
 import br.com.ticketservice.service.TicketService;
+import br.com.ticketservice.util.SearchCriteriaUtil;
 import br.com.ticketservice.validation.TicketValidation;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -70,9 +74,9 @@ public class TicketServiceImpl extends AbstractService implements TicketService 
     }
 
     @Override
-    public Page<TicketSimpleDTO> findByAll(Pageable pageable) {
-
-        Page<Ticket> page = this.ticketRepository.findAllByDeletedIsFalse(pageable);
+    public Page<TicketSimpleDTO> findByAll(Pageable pageable, TicketFilterDTO filter) {
+        List<SearchCriteria> criteria = SearchCriteriaUtil.buildCriteria(filter);
+        Page<Ticket> page = this.ticketRepository.findAll(TicketSpecification.listAllByCriteria(criteria), pageable);
         return page.map(item -> modelMapper.map(item, TicketSimpleDTO.class));
 
     }

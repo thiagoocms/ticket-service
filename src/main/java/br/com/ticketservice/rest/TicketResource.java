@@ -3,6 +3,7 @@ package br.com.ticketservice.rest;
 import br.com.ticketservice.constants.AppConstants;
 import br.com.ticketservice.dto.Response;
 import br.com.ticketservice.dto.ticket.TicketDTO;
+import br.com.ticketservice.dto.ticket.TicketFilterDTO;
 import br.com.ticketservice.dto.ticket.TicketSimpleDTO;
 import br.com.ticketservice.enumerated.TicketStatusEnum;
 import br.com.ticketservice.service.TicketService;
@@ -56,9 +57,9 @@ public class TicketResource {
     }
 
     @GetMapping
-    public ResponseEntity<Response<List<TicketSimpleDTO>>> findByAll(Pageable pageable) {
+    public ResponseEntity<Response<List<TicketSimpleDTO>>> findByAll(Pageable pageable, TicketFilterDTO filter) {
 
-        Page<TicketSimpleDTO> page = ticketService.findByAll(pageable);
+        Page<TicketSimpleDTO> page = ticketService.findByAll(pageable, filter);
 
         return ResponseEntity
                 .ok()

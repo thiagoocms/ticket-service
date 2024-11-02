@@ -82,4 +82,14 @@ public class UserResource {
 
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
+
+    @GetMapping("by-login/{login}")
+    public ResponseEntity<Response<UserDTO>> findByUsername(@PathVariable String login) throws Throwable {
+
+        UserDTO userDTO = userService.findByLogin(login);
+
+        return ResponseEntity
+                .ok()
+                .body(new Response<>(HttpStatus.OK, userDTO));
+    }
 }
